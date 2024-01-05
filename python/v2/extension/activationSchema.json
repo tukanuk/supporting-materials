@@ -1,0 +1,97 @@
+{
+  "types": {
+    "dynatrace.datasource.python:python_perform_host_performance-endpoint": {
+      "type": "object",
+      "displayName": "Python_perform_host_performance Endpoint",
+      "summaryPattern": "Python_perform_host_performance",
+      "properties": {
+        "enabled": {
+          "displayName": "Enabled",
+          "description": "Enable/disable this configuration",
+          "type": "boolean",
+          "default": true
+        },
+        "interval": {
+          "displayName": "Query frequency",
+          "description": "Query frequency in minutes",
+          "type": "integer",
+          "nullable": false,
+          "default": 1,
+          "constraints": [
+            {
+              "type": "RANGE",
+              "minLength": 1,
+              "maxLength": 600
+            }
+          ],
+          "maxItems": 1
+        }
+      }
+    },
+    "pythonRemote": {
+      "type": "object",
+      "properties": {
+        "endpoints": {
+          "displayName": "Python_perform_host_performance endpoint",
+          "type": "list",
+          "items": {
+            "type": {
+              "$ref": "#/types/dynatrace.datasource.python:python_perform_host_performance-endpoint"
+            }
+          },
+          "nullable": false,
+          "minItems": 1,
+          "maxItems": 100,
+          "metaData": {
+            "addItemButton": "Add endpoint"
+          }
+        }
+      }
+    },
+    "pythonLocal": {
+      "type": "object",
+      "properties": {
+        "endpoints": {
+          "displayName": "Python_perform_host_performance endpoint",
+          "type": "list",
+          "items": {
+            "type": {
+              "$ref": "#/types/dynatrace.datasource.python:python_perform_host_performance-endpoint"
+            }
+          },
+          "nullable": false,
+          "minItems": 1,
+          "maxItems": 100,
+          "metaData": {
+            "addItemButton": "Add endpoint"
+          }
+        }
+      }
+    }
+  },
+  "dynatrace": "1",
+  "description": "python_perform_host_performance configuration",
+  "schemaId": "python-extension.activation",
+  "displayName": "python_perform_host_performance configuration",
+  "ownerProductManagement": "dynatrace",
+  "ownerDevelopment": "dynatrace",
+  "maturity": "GENERAL_AVAILABILITY",
+  "allowedScopes": [
+    "tenant"
+  ],
+  "multiObject": false,
+  "properties": {
+    "pythonLocal": {
+      "displayName": "Python Local Extension",
+      "type": {
+        "$ref": "#/types/pythonLocal"
+      }
+    },
+    "pythonRemote": {
+      "displayName": "Python Remote Extension",
+      "type": {
+        "$ref": "#/types/pythonRemote"
+      }
+    }
+  }
+}

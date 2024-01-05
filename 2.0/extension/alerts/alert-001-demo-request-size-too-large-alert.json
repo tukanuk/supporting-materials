@@ -1,0 +1,23 @@
+{
+  "id": "6786d165-f7e2-4197-be16-fd0684d90a5d",
+  "metricSelector": "tech.kafka.kafka.producer.producer-metrics.request-size-avg",
+  "name": "Demo - request size too large alert",
+  "description": "The {metricname} value was {alert_condition} normal behavior. Dimensions: {dims}",
+  "enabled": true,
+  "monitoringStrategy": {
+    "type": "STATIC_THRESHOLD",
+    "violatingSamples": 3,
+    "samples": 5,
+    "dealertingSamples": 5,
+    "alertCondition": "ABOVE",
+    "alertingOnMissingData": false,
+    "threshold": 10
+  },
+  "primaryDimensionKey": "dt.entity.process_group_instance",
+  "alertCondition": "ABOVE",
+  "samples": 5,
+  "violatingSamples": 3,
+  "dealertingSamples": 5,
+  "threshold": 10,
+  "eventType": "CUSTOM_ALERT"
+}

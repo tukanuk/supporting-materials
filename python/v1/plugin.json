@@ -1,0 +1,180 @@
+{
+    "name": "custom.python.perform_host_performance_plugin",
+    "version": "0.14",
+    "type": "python",
+    "requiredAgentVersion": "1.268",
+    "entity": "HOST",
+    "metricGroup": "perform_host_performance.demo",
+    "technologies": [
+      "PYTHON"
+    ],
+    "source": {
+      "package": "perform_plugin",
+      "className": "PerformHostPerformancePlugin",
+      "install_requires": [
+        "psutil>=5.9.6"
+      ],
+      "activation": "Singleton"
+    },
+    "configUI": {
+      "displayName": "Perform Host Performance Extension",
+      "properties": [
+        {
+          "key": "interval",
+          "displayName": "Query frequency",
+          "displayOrder": 1,
+          "displayHint": "Query frequency in minutes"
+        }
+      ]
+    },
+    "metrics": [
+      {
+        "timeseries": {
+          "key": "disk.total",
+          "unit": "Byte",
+          "displayname": "Disk size"
+        }
+      },
+      {
+        "timeseries": {
+          "key": "disk.used",
+          "unit": "Byte",
+          "displayname": "Disk used"
+        }
+      },
+      {
+        "timeseries": {
+          "key": "disk.free",
+          "unit": "Byte",
+          "displayname": "Disk free"
+        }
+      },
+      {
+        "timeseries": {
+          "key": "cpu.usage",
+          "unit": "Percent",
+          "displayname": "CPU Usage"
+        }
+      },
+      {
+        "timeseries": {
+          "key": "memory.usage",
+          "unit": "Percent",
+          "displayname": "Memory Usage"
+        }
+      }
+    ],
+    "ui": {
+      "keymetrics": [
+        {
+          "key": "cpu.usage",
+          "aggregation": "avg",
+          "displayname": "CPU Usage"
+        },
+        {
+          "key": "memory.usage",
+          "aggregation": "avg",
+          "displayname": "Memory Usage"
+        }
+      ],
+      "keycharts": [
+        {
+          "group": "Disk",
+          "title": "Disk Metrics",
+          "description": "Disk Metrics",
+          "series": [
+            {
+              "key": "disk.total",
+              "aggregation": "avg",
+              "displayname": "Disk size",
+              "color": "rgb(255, 0, 0)",
+              "seriestype": "line",
+              "stacked": false
+            },
+            {
+              "key": "disk.used",
+              "aggregation": "avg",
+              "displayname": "Disk used",
+              "color": "rgb(255, 255, 0)",
+              "seriestype": "area",
+              "stacked": true
+            },
+            {
+              "key": "disk.free",
+              "aggregation": "avg",
+              "displayname": "Disk free",
+              "color": "rgb(0, 255, 0)",
+              "seriestype": "area",
+              "stacked": true
+            }
+          ]
+        }
+      ],
+      "charts": [
+        {
+          "group": "Disk",
+          "title": "Disk Metrics",
+          "description": "Some disk metrics",
+          "series": [
+            {
+              "key": "disk.total",
+              "aggregation": "avg",
+              "displayname": "Disk size",
+              "color": "rgb(255, 0, 0)",
+              "seriestype": "line"
+            },
+            {
+              "key": "disk.used",
+              "aggregation": "avg",
+              "displayname": "Disk used",
+              "color": "rgb(255, 255, 0)",
+              "seriestype": "bar"
+            },
+            {
+              "key": "disk.free",
+              "aggregation": "avg",
+              "displayname": "Disk free",
+              "color": "rgb(0, 255, 0)",
+              "seriestype": "bar"
+            }
+          ]
+        },
+        {
+          "group": "CPU",
+          "title": "CPU Metrics",
+          "description": "Some CPU metrics",
+          "series": [
+            {
+              "key": "cpu.usage",
+              "aggregation": "avg",
+              "displayname": "CPU Usage",
+              "color": "rgb(0, 0, 255)",
+              "seriestype": "area",
+              "stacked": true
+            }
+          ]
+        },
+        {
+          "group": "Memory",
+          "title": "Memory Metrics",
+          "description": "Some memory metrics",
+          "series": [
+            {
+              "key": "memory.usage",
+              "aggregation": "avg",
+              "displayname": "Memory usage",
+              "seriestype": "area",
+              "unit": "Percent"
+            }
+          ]
+        }
+      ]
+    },
+    "properties": [
+      {
+        "key": "interval",
+        "type": "INTEGER",
+        "defaultValue": 1
+      }
+    ]
+  }

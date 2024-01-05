@@ -1,0 +1,159 @@
+name: custom:python-perform-host-performance
+version: 0.2.14
+minDynatraceVersion: 1.278.0
+author:
+  name: "Dynatrace"
+
+python:
+  runtime:
+    module: python_perform_host_performance
+    version:
+      min: "3.9"
+
+  activation:
+    remote:
+      path: activationSchema.json
+    local:
+      path: activationSchema.json
+
+  featureSets:
+  - featureSet: disk
+    metrics:
+      - key: custom.perform_host_performance.disk.total
+      - key: custom.perform_host_performance.disk.used
+      - key: custom.perform_host_performance.disk.free
+  - featureSet: CPU
+    metrics:
+      - key: custom.perform_host_performance.cpu.usage
+  - featureSet: Memory
+    metrics:
+      - key: custom.perform_host_performance.memory.usage
+
+metrics:
+  - key: custom.perform_host_performance.disk.total
+    metadata:
+      displayName: Total disk capacity
+      description: The total capacity of the disk
+      unit: Byte
+      dimensions:
+        - key: my_dimension
+          displayName: My Dimension
+  - key: custom.perform_host_performance.disk.used
+    metadata:
+      displayName: Disk used
+      description: Total disk used
+      unit: Byte
+      dimensions:
+        - key: my_dimension
+          displayName: My Dimension
+  - key: custom.perform_host_performance.disk.free
+    metadata:
+      displayName: Disk free
+      description: Total disk free
+      unit: Byte
+      dimensions:
+        - key: my_dimension
+          displayName: My Dimension
+  - key: custom.perform_host_performance.cpu.usage
+    metadata:
+      displayName: CPU Percent usage
+      description: Total CPU usage
+      unit: Percent
+      dimensions:
+        - key: my_dimension
+          displayName: My Dimension
+  - key: custom.perform_host_performance.memory.usage
+    metadata:
+      displayName: Memory Usage
+      description: Total memory usage
+      unit: Percent
+      dimensions:
+        - key: my_dimension
+          displayName: My Dimension
+
+topology:
+  types:
+    - enabled: true
+      name: python:perform_host_performance
+      displayName: Perform Host Performance
+      rules:
+        - idPattern: python_host_performance_{dt.entity.host}
+          instanceNamePattern: "Perform on {host.name}"
+          iconPattern: server
+          sources:
+            - sourceType: Metrics
+              condition: $prefix(custom.perform_host_performance)
+          attributes:
+            - key: host
+              pattern: "{host}"
+  relationships:
+    - enabled: true
+      fromType: python:perform_host_performance
+      typeOfRelation: RUNS_ON
+      toType: host
+      sources:
+        - sourceType: Metrics
+          condition: $prefix(custom.perform_host_performance)
+
+screens:
+  - entityType: HOST
+    detailsInjections:
+      - type: CHART_GROUP
+        key: host_injection_card
+        conditions:
+          - relatedEntity|entitySelectorTemplate=type(python:perform_host_performance),fromRelationships.runsOn($(entityConditions))
+    chartsCards:
+      - key: host_injection_card
+        displayName: Perform Host Performance Metrics
+        description: Metrics from the Perform Host Performance Extension
+        mode: NORMAL
+        numberOfVisibleCharts: 3
+        entitySelectorTemplate: type(python:perform_host_performance), fromRelationships.runsOn($(entityConditions))
+        charts:
+          - displayName: Disk
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: true
+              connectGaps: true
+              metrics:
+                - metricSelector: custom.perform_host_performance.disk.total:splitBy()
+                  visualization:
+                    displayName: Total
+                    seriesType: LINE
+                    themeColor: RED
+                - metricSelector: custom.perform_host_performance.disk.used:splitBy()
+                  visualization:
+                    displayName: Used
+                    seriesType: AREA
+                    themeColor: BLUE
+                - metricSelector: custom.perform_host_performance.disk.free:splitBy()
+                  visualization:
+                    displayName: Free
+                    seriesType: AREA
+                    themeColor: GREEN
+          - displayName: CPU
+            visualizationType: SINGLE_VALUE
+            singleValueConfig:
+              showSparkline: false
+              thresholds:
+                - value: 80
+                  color: "#ff0000"
+                - value: 20
+                  color: "#ECB22E"
+                - value: 0
+                  color: "#21A366"
+              metric:
+                metricSelector: custom.perform_host_performance.cpu.usage:splitBy()
+
+          - displayName: Memory
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              metrics:
+                - metricSelector: custom.perform_host_performance.memory.usage:splitBy()
+                  visualization:
+                    displayName: Usage
+                    seriesType: AREA
+                    themeColor: BLUE
+
+dashboards:
+  - path: dashboards/overview_dashboard.json

@@ -1,0 +1,1506 @@
+name: custom:tech.kafka
+version: 2.0.1
+minDynatraceVersion: 1.275.0
+author:
+  name: Your name here
+jmx:
+  groups:
+    - group: jmx
+      subgroups:
+        - subgroup: kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec
+          query: kafka.server:type=BrokerTopicMetrics,name=BytesInPerSec
+          metrics:
+            - key: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec
+          query: kafka.server:type=BrokerTopicMetrics,name=BytesOutPerSec
+          metrics:
+            - key: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec
+          query: kafka.server:type=BrokerTopicMetrics,name=MessagesInPerSec
+          metrics:
+            - key: tech.kafka.kafka.server.BrokerTopicMetrics.MessagesInPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.server:type=ReplicaManager,name=PartitionCount,*
+          query: kafka.server:type=ReplicaManager,name=PartitionCount,*
+          metrics:
+            - key: tech.kafka.kafka.server.ReplicaManager.PartitionCount.Value
+              value: attribute:Value
+              type: gauge
+            - key: tech.kafka.pg.kafka.server.ReplicaManager.PartitionCount.Value
+              value: attribute:Value
+              type: gauge
+        - subgroup: kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions,*
+          query: kafka.server:type=ReplicaManager,name=UnderReplicatedPartitions,*
+          metrics:
+            - key: tech.kafka.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value
+              value: attribute:Value
+              type: gauge
+            - key: tech.kafka.pg.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value
+              value: attribute:Value
+              type: gauge
+        - subgroup: kafka.controller:type=KafkaController,name=OfflinePartitionsCount,*
+          query: kafka.controller:type=KafkaController,name=OfflinePartitionsCount,*
+          metrics:
+            - key: tech.kafka.pg.kafka.controller.KafkaController.OfflinePartitionsCount.Value
+              value: attribute:Value
+              type: gauge
+        - subgroup: kafka.controller:type=KafkaController,name=ActiveControllerCount,*
+          query: kafka.controller:type=KafkaController,name=ActiveControllerCount,*
+          metrics:
+            - key: tech.kafka.pg.kafka.controller.KafkaController.ActiveControllerCount.Value
+              value: attribute:Value
+              type: gauge
+        - subgroup: kafka.log:type=LogFlushStats,name=LogFlushRateAndTimeMs,*
+          query: kafka.log:type=LogFlushStats,name=LogFlushRateAndTimeMs,*
+          metrics:
+            - key: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Percentile95th
+              value: attribute:95thPercentile
+              type: gauge
+            - key: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Mean
+              value: attribute:Mean
+              type: gauge
+        - subgroup: kafka.network:type=RequestMetrics,name=RequestsPerSec,request=Produce,*
+          query: kafka.network:type=RequestMetrics,name=RequestsPerSec,request=Produce,*
+          metrics:
+            - key: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.Produce.OneMinuteRate.request
+              value: attribute:OneMinuteRate
+              type: gauge
+          dimensions:
+            - key: request
+              value: property:request
+        - subgroup: kafka.network:type=RequestMetrics,name=RequestsPerSec,request=FetchConsumer,*
+          query: kafka.network:type=RequestMetrics,name=RequestsPerSec,request=FetchConsumer,*
+          metrics:
+            - key: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchConsumer.OneMinuteRate.request
+              value: attribute:OneMinuteRate
+              type: gauge
+          dimensions:
+            - key: request
+              value: property:request
+        - subgroup: kafka.network:type=RequestMetrics,name=RequestsPerSec,request=FetchFollower,*
+          query: kafka.network:type=RequestMetrics,name=RequestsPerSec,request=FetchFollower,*
+          metrics:
+            - key: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchFollower.OneMinuteRate.request
+              value: attribute:OneMinuteRate
+              type: gauge
+          dimensions:
+            - key: request
+              value: property:request
+        - subgroup: kafka.network:type=RequestMetrics,name=TotalTimeMs,request=Produce,*
+          query: kafka.network:type=RequestMetrics,name=TotalTimeMs,request=Produce,*
+          metrics:
+            - key: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count
+              value: attribute:Count
+              type: count
+          dimensions:
+            - key: request
+              value: property:request
+        - subgroup: kafka.network:type=RequestMetrics,name=TotalTimeMs,request=FetchConsumer,*
+          query: kafka.network:type=RequestMetrics,name=TotalTimeMs,request=FetchConsumer,*
+          metrics:
+            - key: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count
+              value: attribute:Count
+              type: count
+          dimensions:
+            - key: request
+              value: property:request
+        - subgroup: kafka.network:type=RequestMetrics,name=TotalTimeMs,request=FetchFollower,*
+          query: kafka.network:type=RequestMetrics,name=TotalTimeMs,request=FetchFollower,*
+          metrics:
+            - key: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchFollower.Count.request.count
+              value: attribute:Count
+              type: count
+          dimensions:
+            - key: request
+              value: property:request
+        - subgroup: kafka.server:type=BrokerTopicMetrics,name=TotalProduceRequestsPerSec
+          query: kafka.server:type=BrokerTopicMetrics,name=TotalProduceRequestsPerSec
+          metrics:
+            - key: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.server:type=BrokerTopicMetrics,name=TotalFetchRequestsPerSec
+          query: kafka.server:type=BrokerTopicMetrics,name=TotalFetchRequestsPerSec
+          metrics:
+            - key: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.server:type=BrokerTopicMetrics,name=FailedProduceRequestsPerSec
+          query: kafka.server:type=BrokerTopicMetrics,name=FailedProduceRequestsPerSec
+          metrics:
+            - key: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.server:type=BrokerTopicMetrics,name=FailedFetchRequestsPerSec
+          query: kafka.server:type=BrokerTopicMetrics,name=FailedFetchRequestsPerSec
+          metrics:
+            - key: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.controller:type=ControllerStats,name=LeaderElectionRateAndTimeMs,*
+          query: kafka.controller:type=ControllerStats,name=LeaderElectionRateAndTimeMs,*
+          metrics:
+            - key: tech.kafka.kafka.controller.ControllerStats.LeaderElectionRateAndTimeMs.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+            - key: tech.kafka.pg.kafka.controller.ControllerStats.LeaderElectionRateAndTimeMs.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.controller:type=ControllerStats,name=UncleanLeaderElectionsPerSec,*
+          query: kafka.controller:type=ControllerStats,name=UncleanLeaderElectionsPerSec,*
+          metrics:
+            - key: tech.kafka.kafka.controller.ControllerStats.UncleanLeaderElectionsPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+            - key: tech.kafka.pg.kafka.controller.ControllerStats.UncleanLeaderElectionsPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.server:type=ReplicaManager,name=LeaderCount,*
+          query: kafka.server:type=ReplicaManager,name=LeaderCount,*
+          metrics:
+            - key: tech.kafka.kafka.server.ReplicaManager.LeaderCount.Value
+              value: attribute:Value
+              type: gauge
+        - subgroup: kafka.server:type=ReplicaFetcherManager,name=MaxLag,clientId=Replica,*
+          query: kafka.server:type=ReplicaFetcherManager,name=MaxLag,clientId=Replica,*
+          metrics:
+            - key: tech.kafka.kafka.server.ReplicaFetcherManager.MaxLag.Replica.Value
+              value: attribute:Value
+              type: gauge
+        - subgroup: kafka.network:type=RequestChannel,name=RequestQueueSize,*
+          query: kafka.network:type=RequestChannel,name=RequestQueueSize,*
+          metrics:
+            - key: tech.kafka.kafka.network.RequestChannel.RequestQueueSize.Value
+              value: attribute:Value
+              type: gauge
+        - subgroup: kafka.server:type=SessionExpireListener,name=ZooKeeperDisconnectsPerSec,*
+          query: kafka.server:type=SessionExpireListener,name=ZooKeeperDisconnectsPerSec,*
+          metrics:
+            - key: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperDisconnectsPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.server:type=SessionExpireListener,name=ZooKeeperExpiresPerSec,*
+          query: kafka.server:type=SessionExpireListener,name=ZooKeeperExpiresPerSec,*
+          metrics:
+            - key: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperExpiresPerSec.OneMinuteRate
+              value: attribute:OneMinuteRate
+              type: gauge
+        - subgroup: kafka.producer:type=producer-metrics,client-id=*,*
+          query: kafka.producer:type=producer-metrics,client-id=*,*
+          metrics:
+            - key: tech.kafka.kafka.producer.producer-metrics.request-rate
+              value: attribute:request-rate
+              type: gauge
+            - key: tech.kafka.kafka.producer.producer-metrics.request-size-avg
+              value: attribute:request-size-avg
+              type: gauge
+            - key: tech.kafka.kafka.producer.producer-metrics.incoming-byte-rate
+              value: attribute:incoming-byte-rate
+              type: gauge
+            - key: tech.kafka.kafka.producer.producer-metrics.outgoing-byte-rate
+              value: attribute:outgoing-byte-rate
+              type: gauge
+        - subgroup: kafka.consumer:type=consumer-metrics,client-id=*,*
+          query: kafka.consumer:type=consumer-metrics,client-id=*,*
+          metrics:
+            - key: tech.kafka.kafka.consumer.consumer-metrics.request-rate
+              value: attribute:request-rate
+              type: gauge
+            - key: tech.kafka.kafka.consumer.consumer-metrics.request-size-avg
+              value: attribute:request-size-avg
+              type: gauge
+        - subgroup: kafka.connect:type=connect-metrics,client-id=*,*
+          query: kafka.connect:type=connect-metrics,client-id=*,*
+          metrics:
+            - key: tech.kafka.kafka.connect.connect-metrics.request-rate
+              value: attribute:request-rate
+              type: gauge
+            - key: tech.kafka.kafka.connect.connect-metrics.request-size-avg
+              value: attribute:request-size-avg
+              type: gauge
+            - key: tech.kafka.kafka.connect.connect-metrics.incoming-byte-rate
+              value: attribute:incoming-byte-rate
+              type: gauge
+            - key: tech.kafka.kafka.connect.connect-metrics.outgoing-byte-rate
+              value: attribute:outgoing-byte-rate
+              type: gauge
+        - subgroup: kafka.consumer:type=consumer-metrics,client-id=*
+          query: kafka.consumer:type=consumer-metrics,client-id=*
+          metrics:
+            - key: tech.kafka.kafka.consumer.consumer-metrics.incoming-byte-rate
+              value: attribute:incoming-byte-rate
+              type: gauge
+            - key: tech.kafka.kafka.consumer.consumer-metrics.outgoing-byte-rate
+              value: attribute:outgoing-byte-rate
+              type: gauge
+screens:
+  - entityType: PROCESS_GROUP_INSTANCE
+    detailsInjections:
+      - type: CHART_GROUP
+        key: chartgroup-kafka-broker
+        conditions:
+          - metricAvailable|metric=dsfm:extension.status:filter(and(eq("dt.extension.name","custom:tech.kafka"),in("dt.entity.host",
+            entitySelector("type(host),toRelationships.isProcessOf(entityId($(entityId)))"))))|lastWrittenWithinDays=5
+          - entityAttribute|softwareTechnologies=KAFKA
+      - type: CHART_GROUP
+        key: chartgroup-kafka-cluster
+        conditions:
+          - metricAvailable|metric=dsfm:extension.status:filter(and(eq("dt.extension.name","custom:tech.kafka"),in("dt.entity.host",
+            entitySelector("type(host),toRelationships.isProcessOf(entityId($(entityId)))"))))|lastWrittenWithinDays=5
+          - entityAttribute|softwareTechnologies=KAFKA
+      - type: CHART_GROUP
+        key: chartgroup-kafka-producer
+        conditions:
+          - metricAvailable|metric=dsfm:extension.status:filter(and(eq("dt.extension.name","custom:tech.kafka"),in("dt.entity.host",
+            entitySelector("type(host),toRelationships.isProcessOf(entityId($(entityId)))"))))|lastWrittenWithinDays=5
+          - entityAttribute|softwareTechnologies=KAFKA
+      - type: CHART_GROUP
+        key: chartgroup-kafka-consumer
+        conditions:
+          - metricAvailable|metric=dsfm:extension.status:filter(and(eq("dt.extension.name","custom:tech.kafka"),in("dt.entity.host",
+            entitySelector("type(host),toRelationships.isProcessOf(entityId($(entityId)))"))))|lastWrittenWithinDays=5
+          - entityAttribute|softwareTechnologies=KAFKA
+      - type: CHART_GROUP
+        key: chartgroup-kafka-connect
+        conditions:
+          - metricAvailable|metric=dsfm:extension.status:filter(and(eq("dt.extension.name","custom:tech.kafka"),in("dt.entity.host",
+            entitySelector("type(host),toRelationships.isProcessOf(entityId($(entityId)))"))))|lastWrittenWithinDays=5
+          - entityAttribute|softwareTechnologies=KAFKA
+      - type: METRIC_TABLE
+        key: metrictable-kafka-network
+        conditions:
+          - metricAvailable|metric=dsfm:extension.status:filter(and(eq("dt.extension.name","custom:tech.kafka"),in("dt.entity.host",
+            entitySelector("type(host),toRelationships.isProcessOf(entityId($(entityId)))"))))|lastWrittenWithinDays=5
+          - entityAttribute|softwareTechnologies=KAFKA
+    chartsCards:
+      - key: chartgroup-kafka-broker
+        displayName: Kafka broker
+        numberOfVisibleCharts: 3
+        chartsInRow: 3
+        mode: NORMAL
+        hideEmptyCharts: true
+        charts:
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Messages
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.MessagesInPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Messages in rate
+          - displayName: Produce request rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: true
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Produce request rate
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Failed produce requests
+                    seriesType: COLUMN
+          - displayName: Fetch request rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: true
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Fetch request rate
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Failed fetch requests
+                    seriesType: COLUMN
+          - displayName: Leaders
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.controller.ControllerStats.LeaderElectionRateAndTimeMs.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Leader election rate
+                - metricSelector: tech.kafka.kafka.controller.ControllerStats.UncleanLeaderElectionsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Unclean election rate
+                - metricSelector: tech.kafka.kafka.server.ReplicaManager.LeaderCount.Value:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Leader count
+          - displayName: Lag
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.ReplicaFetcherManager.MaxLag.Replica.Value:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Max follower lag
+          - displayName: Queue Size
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.network.RequestChannel.RequestQueueSize.Value:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Request queue size
+          - displayName: ZooKeeper
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperDisconnectsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: ZooKeeper disconnects
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperExpiresPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: ZooKeeper expires
+                    seriesType: COLUMN
+          - displayName: Log flush
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Mean:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Mean time
+                - metricSelector: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Percentile95th:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: 95th percentile
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Partitions
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.ReplicaManager.PartitionCount.Value:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: right
+                  visualization:
+                    displayName: Partitions
+                    seriesType: LINE
+                - metricSelector: tech.kafka.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Under replicated partitions
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Produce request rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Produce request rate
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Failed produce requests
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: right
+                  visualization:
+                    displayName: Produce latency
+                    seriesType: LINE
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Fetch request rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Fetch request rate
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Failed fetch requests
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: right
+                  visualization:
+                    displayName: Fetch latency
+                    seriesType: LINE
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+      - key: chartgroup-kafka-cluster
+        displayName: Kafka cluster
+        numberOfVisibleCharts: 2
+        chartsInRow: 2
+        mode: NORMAL
+        hideEmptyCharts: true
+        charts:
+          - displayName: Partitions
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.pg.kafka.server.ReplicaManager.PartitionCount.Value:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: right
+                  visualization:
+                    displayName: Partitions
+                    seriesType: LINE
+                - metricSelector: tech.kafka.pg.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Under replicated partitions
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.pg.kafka.controller.KafkaController.OfflinePartitionsCount.Value:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Offline partitions
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Controllers
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.pg.kafka.controller.KafkaController.ActiveControllerCount.Value:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Active controllers
+      - key: chartgroup-kafka-producer
+        displayName: Kafka producer
+        numberOfVisibleCharts: 2
+        chartsInRow: 2
+        mode: NORMAL
+        hideEmptyCharts: true
+        charts:
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.producer.producer-metrics.incoming-byte-rate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.producer.producer-metrics.outgoing-byte-rate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Requests
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.producer.producer-metrics.request-rate:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests
+                - metricSelector: tech.kafka.kafka.producer.producer-metrics.request-size-avg:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: right
+                  visualization:
+                    displayName: Request size
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+      - key: chartgroup-kafka-consumer
+        displayName: Kafka consumer
+        numberOfVisibleCharts: 2
+        chartsInRow: 2
+        mode: NORMAL
+        hideEmptyCharts: true
+        charts:
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.consumer.consumer-metrics.incoming-byte-rate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.consumer.consumer-metrics.outgoing-byte-rate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Requests
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.consumer.consumer-metrics.request-rate:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests
+                - metricSelector: tech.kafka.kafka.consumer.consumer-metrics.request-size-avg:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: right
+                  visualization:
+                    displayName: Request size
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+      - key: chartgroup-kafka-connect
+        displayName: Kafka connect
+        numberOfVisibleCharts: 2
+        chartsInRow: 2
+        mode: NORMAL
+        hideEmptyCharts: true
+        charts:
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.connect.connect-metrics.incoming-byte-rate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.connect.connect-metrics.outgoing-byte-rate:splitBy("dt.entity.process_group_instance")
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Requests
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.connect.connect-metrics.request-rate:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests
+                - metricSelector: tech.kafka.kafka.connect.connect-metrics.request-size-avg:splitBy("dt.entity.process_group_instance")
+                  yAxisKey: right
+                  visualization:
+                    displayName: Request size
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+    metricTableCards:
+      - key: metrictable-kafka-network
+        pageSize: 5
+        displayName: Kafka network
+        numberOfVisibleCharts: 1
+        hideEmptyCharts: true
+        displayCharts: true
+        enableDetailsExpandability: true
+        charts:
+          - displayName: Requests
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.Produce.OneMinuteRate.request:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.Produce.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("request"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.Produce.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("request")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests per second
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchConsumer.OneMinuteRate.request:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchConsumer.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("request"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchConsumer.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("request")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests per second
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchFollower.OneMinuteRate.request:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchFollower.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("request"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchFollower.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("request")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests per second
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count$(entityFilter)$(userFilter):splitBy("request"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count$(entityFilter)$(userFilter):splitBy("request")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Total time per request
+                    seriesType: AREA
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count$(entityFilter)$(userFilter):splitBy("request"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count$(entityFilter)$(userFilter):splitBy("request")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Total time per request
+                    seriesType: AREA
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchFollower.Count.request.count:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchFollower.Count.request.count$(entityFilter)$(userFilter):splitBy("request"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchFollower.Count.request.count$(entityFilter)$(userFilter):splitBy("request")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Total time per request
+                    seriesType: AREA
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+  - entityType: HOST
+    detailsInjections:
+      - type: METRIC_TABLE
+        key: metrictable-jmx-tech_kafka
+        conditions:
+          - metricAvailable|metric=dsfm:extension.status:filter(and(eq("dt.extension.name","custom:tech.kafka"),in("dt.entity.host",
+            entitySelector("entityId($(entityId))"))))|lastWrittenWithinDays=5
+    metricTableCards:
+      - key: metrictable-jmx-tech_kafka
+        displayName: JMX Metrics (tech.kafka)
+        pageSize: 5
+        numberOfVisibleCharts: 3
+        hideEmptyCharts: true
+        displayCharts: true
+        enableDetailsExpandability: true
+        charts:
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Messages
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.MessagesInPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.MessagesInPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.MessagesInPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Messages in rate
+          - displayName: Requests
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.Produce.OneMinuteRate.request:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.Produce.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.Produce.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests per second
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchConsumer.OneMinuteRate.request:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchConsumer.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchConsumer.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests per second
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchFollower.OneMinuteRate.request:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchFollower.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchFollower.OneMinuteRate.request$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests per second
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Total time per request
+                    seriesType: AREA
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Total time per request
+                    seriesType: AREA
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchFollower.Count.request.count:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchFollower.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchFollower.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Total time per request
+                    seriesType: AREA
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Produce request rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: true
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Produce request rate
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Failed produce requests
+                    seriesType: COLUMN
+          - displayName: Fetch request rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: true
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Fetch request rate
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Failed fetch requests
+                    seriesType: COLUMN
+          - displayName: Leaders
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.controller.ControllerStats.LeaderElectionRateAndTimeMs.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.controller.ControllerStats.LeaderElectionRateAndTimeMs.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.controller.ControllerStats.LeaderElectionRateAndTimeMs.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Leader election rate
+                - metricSelector: tech.kafka.kafka.controller.ControllerStats.UncleanLeaderElectionsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.controller.ControllerStats.UncleanLeaderElectionsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.controller.ControllerStats.UncleanLeaderElectionsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Unclean election rate
+                - metricSelector: tech.kafka.kafka.server.ReplicaManager.LeaderCount.Value:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.ReplicaManager.LeaderCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.ReplicaManager.LeaderCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Leader count
+          - displayName: Lag
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.ReplicaFetcherManager.MaxLag.Replica.Value:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.ReplicaFetcherManager.MaxLag.Replica.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.ReplicaFetcherManager.MaxLag.Replica.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Max follower lag
+          - displayName: Queue Size
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.network.RequestChannel.RequestQueueSize.Value:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestChannel.RequestQueueSize.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestChannel.RequestQueueSize.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Request queue size
+          - displayName: ZooKeeper
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperDisconnectsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperDisconnectsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperDisconnectsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: ZooKeeper disconnects
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperExpiresPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperExpiresPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperExpiresPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: ZooKeeper expires
+                    seriesType: COLUMN
+          - displayName: Partitions
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.pg.kafka.server.ReplicaManager.PartitionCount.Value:splitBy()
+                  metricSelectorSort: tech.kafka.pg.kafka.server.ReplicaManager.PartitionCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.pg.kafka.server.ReplicaManager.PartitionCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Partitions
+                    seriesType: LINE
+                - metricSelector: tech.kafka.pg.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value:splitBy()
+                  metricSelectorSort: tech.kafka.pg.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.pg.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Under replicated partitions
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.pg.kafka.controller.KafkaController.OfflinePartitionsCount.Value:splitBy()
+                  metricSelectorSort: tech.kafka.pg.kafka.controller.KafkaController.OfflinePartitionsCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.pg.kafka.controller.KafkaController.OfflinePartitionsCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Offline partitions
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Controllers
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.pg.kafka.controller.KafkaController.ActiveControllerCount.Value:splitBy()
+                  metricSelectorSort: tech.kafka.pg.kafka.controller.KafkaController.ActiveControllerCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.pg.kafka.controller.KafkaController.ActiveControllerCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Active controllers
+          - displayName: Log flush
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Mean:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Mean$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Mean$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Mean time
+                - metricSelector: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Percentile95th:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Percentile95th$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Percentile95th$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: 95th percentile
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Partitions
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.ReplicaManager.PartitionCount.Value:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.ReplicaManager.PartitionCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.ReplicaManager.PartitionCount.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Partitions
+                    seriesType: LINE
+                - metricSelector: tech.kafka.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Under replicated partitions
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Produce request rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Produce request rate
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Failed produce requests
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Produce latency
+                    seriesType: LINE
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Fetch request rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Fetch request rate
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Failed fetch requests
+                    seriesType: COLUMN
+                - metricSelector: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Fetch latency
+                    seriesType: LINE
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.producer.producer-metrics.incoming-byte-rate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.producer.producer-metrics.incoming-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.producer.producer-metrics.incoming-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.producer.producer-metrics.outgoing-byte-rate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.producer.producer-metrics.outgoing-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.producer.producer-metrics.outgoing-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.consumer.consumer-metrics.incoming-byte-rate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.consumer.consumer-metrics.incoming-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.consumer.consumer-metrics.incoming-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.consumer.consumer-metrics.outgoing-byte-rate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.consumer.consumer-metrics.outgoing-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.consumer.consumer-metrics.outgoing-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Byte rate
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.connect.connect-metrics.incoming-byte-rate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.connect.connect-metrics.incoming-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.connect.connect-metrics.incoming-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Incoming byte rate
+                - metricSelector: tech.kafka.kafka.connect.connect-metrics.outgoing-byte-rate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.connect.connect-metrics.outgoing-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.connect.connect-metrics.outgoing-byte-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  visualization:
+                    displayName: Outgoing byte rate
+          - displayName: Requests
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.producer.producer-metrics.request-rate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.producer.producer-metrics.request-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.producer.producer-metrics.request-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests
+                - metricSelector: tech.kafka.kafka.producer.producer-metrics.request-size-avg:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.producer.producer-metrics.request-size-avg$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.producer.producer-metrics.request-size-avg$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Request size
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Requests
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.consumer.consumer-metrics.request-rate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.consumer.consumer-metrics.request-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.consumer.consumer-metrics.request-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests
+                - metricSelector: tech.kafka.kafka.consumer.consumer-metrics.request-size-avg:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.consumer.consumer-metrics.request-size-avg$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.consumer.consumer-metrics.request-size-avg$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Request size
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+          - displayName: Requests
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              stacked: false
+              metrics:
+                - metricSelector: tech.kafka.kafka.connect.connect-metrics.request-rate:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.connect.connect-metrics.request-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.connect.connect-metrics.request-rate$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: left
+                  visualization:
+                    displayName: Requests
+                - metricSelector: tech.kafka.kafka.connect.connect-metrics.request-size-avg:splitBy()
+                  metricSelectorSort: tech.kafka.kafka.connect.connect-metrics.request-size-avg$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance"):avg$(aggregation):last:sort(value(avg,$(sortOrder))):names
+                  metricSelectorDetailed: tech.kafka.kafka.connect.connect-metrics.request-size-avg$(entityFilter)$(userFilter):splitBy("dt.entity.process_group_instance")$(aggregation)
+                  yAxisKey: right
+                  visualization:
+                    displayName: Request size
+                    seriesType: COLUMN
+              yAxes:
+                - key: left
+                  position: LEFT
+                  visible: true
+                - key: right
+                  position: RIGHT
+                  visible: true
+metrics:
+  - key: tech.kafka.kafka.server.BrokerTopicMetrics.BytesInPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Incoming byte rate
+      description: Kafka broker - Incoming byte rate
+      unit: BytePerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.BrokerTopicMetrics.BytesOutPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Outgoing byte rate
+      description: Kafka broker - Outgoing byte rate
+      unit: BytePerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.BrokerTopicMetrics.MessagesInPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Messages in rate
+      description: Kafka broker - Messages in rate
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.ReplicaManager.PartitionCount.Value
+    metadata:
+      displayName: Kafka broker - Partitions
+      description: Kafka broker - Partitions
+      unit: Count
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.pg.kafka.server.ReplicaManager.PartitionCount.Value
+    metadata:
+      displayName: Kafka broker - Partitions
+      description: Kafka broker - Partitions
+      unit: Count
+      sourceEntityType: PROCESS_GROUP
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value
+    metadata:
+      displayName: Kafka broker - Under replicated partitions
+      description: Kafka broker - Under replicated partitions
+      unit: Count
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.pg.kafka.server.ReplicaManager.UnderReplicatedPartitions.Value
+    metadata:
+      displayName: Kafka broker - Under replicated partitions
+      description: Kafka broker - Under replicated partitions
+      unit: Count
+      sourceEntityType: PROCESS_GROUP
+      tags:
+        - JMX
+  - key: tech.kafka.pg.kafka.controller.KafkaController.OfflinePartitionsCount.Value
+    metadata:
+      displayName: Kafka controller - Offline partitions
+      description: Kafka controller - Offline partitions
+      unit: Count
+      sourceEntityType: PROCESS_GROUP
+      tags:
+        - JMX
+  - key: tech.kafka.pg.kafka.controller.KafkaController.ActiveControllerCount.Value
+    metadata:
+      displayName: Kafka controller - Active cluster controllers
+      description: Kafka controller - Active cluster controllers
+      unit: Count
+      sourceEntityType: PROCESS_GROUP
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Percentile95th
+    metadata:
+      displayName: Kafka log - Log flush 95th percentile
+      description: Kafka log - Log flush 95th percentile
+      unit: MilliSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.log.LogFlushStats.LogFlushRateAndTimeMs.Mean
+    metadata:
+      displayName: Kafka log - Log flush mean time
+      description: Kafka log - Log flush mean time
+      unit: MilliSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.Produce.OneMinuteRate.request
+    metadata:
+      displayName: Kafka network - Produce requests per second
+      description: Kafka network - Produce requests per second
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchConsumer.OneMinuteRate.request
+    metadata:
+      displayName: Kafka network - FetchConsumer requests per second
+      description: Kafka network - FetchConsumer requests per second
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.network.RequestMetrics.RequestsPerSec.FetchFollower.OneMinuteRate.request
+    metadata:
+      displayName: Kafka network - FetchFollower requests per second
+      description: Kafka network - FetchFollower requests per second
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.Produce.Count.request.count
+    metadata:
+      displayName: Kafka network - Total time per Produce request
+      description: Kafka network - Total time per Produce request
+      unit: MilliSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchConsumer.Count.request.count
+    metadata:
+      displayName: Kafka network - Total time per FetchConsumer request
+      description: Kafka network - Total time per FetchConsumer request
+      unit: MilliSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.network.RequestMetrics.TotalTimeMs.FetchFollower.Count.request.count
+    metadata:
+      displayName: Kafka network - Total time per FetchFollower request
+      description: Kafka network - Total time per FetchFollower request
+      unit: MilliSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.BrokerTopicMetrics.TotalProduceRequestsPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Produce request rate
+      description: Kafka broker - Produce request rate
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.BrokerTopicMetrics.TotalFetchRequestsPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Fetch request rate
+      description: Kafka broker - Fetch request rate
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.BrokerTopicMetrics.FailedProduceRequestsPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Failed produce requests
+      description: Kafka broker - Failed produce requests
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.BrokerTopicMetrics.FailedFetchRequestsPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Failed fetch requests
+      description: Kafka broker - Failed fetch requests
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.controller.ControllerStats.LeaderElectionRateAndTimeMs.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Leader election rate
+      description: Kafka broker - Leader election rate
+      unit: MilliSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.pg.kafka.controller.ControllerStats.LeaderElectionRateAndTimeMs.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Leader election rate
+      description: Kafka broker - Leader election rate
+      unit: MilliSecond
+      sourceEntityType: PROCESS_GROUP
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.controller.ControllerStats.UncleanLeaderElectionsPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Unclean election rate
+      description: Kafka broker - Unclean election rate
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.pg.kafka.controller.ControllerStats.UncleanLeaderElectionsPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - Unclean election rate
+      description: Kafka broker - Unclean election rate
+      unit: PerSecond
+      sourceEntityType: PROCESS_GROUP
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.ReplicaManager.LeaderCount.Value
+    metadata:
+      displayName: Kafka broker - Leader count
+      description: Kafka broker - Leader count
+      unit: Count
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.ReplicaFetcherManager.MaxLag.Replica.Value
+    metadata:
+      displayName: Kafka broker - Max follower lag
+      description: Kafka broker - Max follower lag
+      unit: Count
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.network.RequestChannel.RequestQueueSize.Value
+    metadata:
+      displayName: Kafka broker - Request queue size
+      description: Kafka broker - Request queue size
+      unit: Count
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperDisconnectsPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - ZooKeeper disconnects
+      description: Kafka broker - ZooKeeper disconnects
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.server.SessionExpireListener.ZooKeeperExpiresPerSec.OneMinuteRate
+    metadata:
+      displayName: Kafka broker - ZooKeeper expires
+      description: Kafka broker - ZooKeeper expires
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.producer.producer-metrics.request-rate
+    metadata:
+      displayName: Kafka producer - Requests
+      description: Kafka producer - Requests
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.consumer.consumer-metrics.request-rate
+    metadata:
+      displayName: Kafka consumer - Requests
+      description: Kafka consumer - Requests
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.connect.connect-metrics.request-rate
+    metadata:
+      displayName: Kafka connect - Requests
+      description: Kafka connect - Requests
+      unit: PerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.producer.producer-metrics.request-size-avg
+    metadata:
+      displayName: Kafka producer - Request size
+      description: Kafka producer - Request size
+      unit: Byte
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.consumer.consumer-metrics.request-size-avg
+    metadata:
+      displayName: Kafka consumer - Request size
+      description: Kafka consumer - Request size
+      unit: Byte
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.connect.connect-metrics.request-size-avg
+    metadata:
+      displayName: Kafka connect - Request size
+      description: Kafka connect - Request size
+      unit: Byte
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.producer.producer-metrics.incoming-byte-rate
+    metadata:
+      displayName: Kafka producer - Incoming byte rate
+      description: Kafka producer - Incoming byte rate
+      unit: BytePerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.consumer.consumer-metrics.incoming-byte-rate
+    metadata:
+      displayName: Kafka consumer - Incoming byte rate
+      description: Kafka consumer - Incoming byte rate
+      unit: BytePerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.connect.connect-metrics.incoming-byte-rate
+    metadata:
+      displayName: Kafka connect - Incoming byte rate
+      description: Kafka connect - Incoming byte rate
+      unit: BytePerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.producer.producer-metrics.outgoing-byte-rate
+    metadata:
+      displayName: Kafka producer - Outgoing byte rate
+      description: Kafka producer - Outgoing byte rate
+      unit: BytePerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.consumer.consumer-metrics.outgoing-byte-rate
+    metadata:
+      displayName: Kafka consumer - Outgoing byte rate
+      description: Kafka consumer - Outgoing byte rate
+      unit: BytePerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+  - key: tech.kafka.kafka.connect.connect-metrics.outgoing-byte-rate
+    metadata:
+      displayName: Kafka connect - Outgoing byte rate
+      description: Kafka connect - Outgoing byte rate
+      unit: BytePerSecond
+      sourceEntityType: process_group_instance
+      tags:
+        - JMX
+
+alerts:
+  - path: alerts/alert-001-demo-request-size-too-large-alert.json

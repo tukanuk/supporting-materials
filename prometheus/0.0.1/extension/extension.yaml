@@ -1,0 +1,79 @@
+name: custom:prometheus-windows-exporter
+version: 0.0.1
+minDynatraceVersion: 1.256.0
+author:
+  name: Dynatrace
+vars:
+  - id: volume
+    type: text
+    displayName: Volume (Disk) Name
+    description: Filter Volume Names
+    required: false
+
+metrics:
+  - key: windows_logical_disk_free_bytes
+    metadata:
+      displayName: Windows Logical Disk Free Bytes
+      description: Free space in bytes, updates every 10-15 min (LogicalDisk.PercentFreeSpace)
+      unit: Byte
+  - key: windows_logical_disk_size_bytes
+    metadata:
+      displayName: Windows Logical Disk Size Bytes
+      description: Total space in bytes, updates every 10-15 min (LogicalDisk.PercentFreeSpace_Base)
+      unit: Byte
+  - key: windows_service_info
+    metadata:
+      displayName: Windows Service Info
+      description: A metric with a constant '1' value labeled with service information
+      unit: Count
+prometheus:
+  - group: windows
+    subgroups:
+      - subgroup: disk
+        featureSet: Windows Disk Metrics
+        dimensions:
+          - key: volume
+            value: label:volume
+            filter: var:volume
+        metrics:
+          - key: windows_logical_disk_free_bytes
+            value: metric:windows_logical_disk_free_bytes
+            type: gauge
+          - key: windows_logical_disk_size_bytes
+            value: metric:windows_logical_disk_size_bytes
+            type: gauge
+      - subgroup: running_services
+        featureSet: Windows Running Service Info
+        dimensions:
+          - key: process_id
+            value: label:process_id
+            filter: const:$not($eq(0))
+          - key: display_name
+            value: label:display_name
+        metrics:
+          - key: windows_service_info
+            value: metric:windows_service_info
+            type: gauge
+screens:
+  - entityType: HOST
+    detailsInjections:
+      - type: CHART_GROUP
+        key: prometheus_windows_exporter_metrics
+        conditions:
+          - entityAttribute|osType=WINDOWS
+    chartsCards:
+      - key: prometheus_windows_exporter_metrics
+        numberOfVisibleCharts: 2
+        chartsInRow: 2
+        displayName: Windows Exporter Disk Metrics
+        charts:
+          - displayName: Disk Free Space
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              metrics:
+                - metricSelector: windows_logical_disk_free_bytes:splitBy("volume")
+          - displayName: Disk Size
+            visualizationType: GRAPH_CHART
+            graphChartConfig:
+              metrics:
+                - metricSelector: windows_logical_disk_size_bytes:splitBy("volume")
